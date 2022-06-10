@@ -47,6 +47,14 @@ int inputCheck()
 			printf_s("Входное значение «%c» является недопустимым символом.", ch);
 			throw runtime_error("");
 		}
+
+		// Если файл оказался пуст
+		if (ch != '\n' && !found_num)
+		{
+			// Выдать ошибку
+			throw runtime_error("Отсутствует входное значение.");
+		}
+
 		// Если проверяемый символ - цифра
 		if (ch >= '0' && ch <= '9' && !float_num)
 		{
@@ -94,21 +102,41 @@ int inputCheck()
 */
 int get_count(int prev_level, int n) 
 {
-	return -1;
+	// Если кубики закончились
+	if (0 == n)
+		return 1; // Лесенка полностью сгенерирована
+
+	// Обнулить счётчик лесенок
+	int count = 0;
+
+	// Для каждого возможного кол-ва кубиков на текущем уровне
+	for (int level = 1; level < prev_level; ++level) {
+		// Если кубики закончились
+		if ((n - level) < 0)
+			break; // Завершить цикл
+		// Посчитать кол-во вариантов лесенки, которую можно построить из оставшихся кубиков и прибавить посчитанное число к счётчику лесенок
+		count += get_count(level, n - level);
+	}
+	// Вывести кол-во лесенок
+	return count;
 }
 
 int main() 
 {
 	setlocale(LC_ALL, "Russian");
+
 	try
 	{
-		int n;
+		int n; // Кол-во кубиков
+		// Получить число кубиков из файла, если содержимое файла допустимо
+		n = inputCheck();
 
-		inputCheck();
+		// Посчитать кол-во лесенок и записать результат в файл
+		ofstream ofst("output.txt");
+		ofst << get_count(n + 1, n);
 	}
 	catch (exception& ex)
 	{
 		cout << ex.what() << endl;
 	}
-	return 0;
 }
