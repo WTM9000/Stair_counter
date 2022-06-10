@@ -22,6 +22,7 @@ int get_count(int prev_level, int n)
 
 int main() 
 {
+	setlocale(LC_ALL, "Russian");
 	try
 	{
 		inputCheck();
