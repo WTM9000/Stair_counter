@@ -49,7 +49,7 @@ int inputCheck()
 		}
 
 		// Если файл оказался пуст
-		if (ch != '\n' && !found_num)
+		if (ch == '\n' && !found_num)
 		{
 			// Выдать ошибку
 			throw runtime_error("Отсутствует входное значение.");
