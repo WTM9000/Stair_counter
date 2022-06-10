@@ -10,8 +10,11 @@ int inputCheck()
 	string path_to_input_file;
 	cout << "Введите полное имя файла с входными данными" << std::endl;
 	cin >> path_to_input_file;
-	ifstream input("filename.dat");
-	if (input.bad() == true) throw runtime_error("Отсутствует файл с входными данными");
+	ifstream input(path_to_input_file);
+	if (!input.is_open())
+	{
+		throw runtime_error("Отсутствует файл с входными данными");
+	}
 	return 0;
 }
 
