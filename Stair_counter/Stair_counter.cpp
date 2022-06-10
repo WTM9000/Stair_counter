@@ -41,7 +41,15 @@ int inputCheck()
 		if (ch == '.' && prev_num)
 			throw runtime_error("¬ходное значение не €вл€етс€ целым.");
 	}
-	
+	ifstream input_1(path_to_input_file);
+	int num;
+	input_1 >> num;
+	if (num <= 0 || num >= 100)
+	{
+		printf_s("¬ходное значение %d не принадлежит диапазону (1 .. 100).", num);
+		throw runtime_error("");
+	}
+	return num;
 }
 
 int get_count(int prev_level, int n) 
