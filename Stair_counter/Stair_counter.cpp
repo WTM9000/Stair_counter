@@ -13,7 +13,18 @@ int inputCheck()
 	ifstream input(path_to_input_file);
 	if (!input.is_open())
 	{
-		throw runtime_error("Отсутствует файл с входными данными");
+		throw runtime_error("Неверно указан файл с входными данными. Возможно, файл не существует.");
+	}
+
+	char ch;
+	while (input >> ch)
+	{
+
+		if (((ch > '9') || (ch < '0')) && (ch != ',') && (ch != '.') && (ch != ' ') && (ch != '\n'))
+		{
+			printf_s("Входное значение «%c» является недопустимым символом.", ch);
+			throw runtime_error("");
+		}
 	}
 	return 0;
 }
@@ -32,7 +43,7 @@ int main()
 	}
 	catch (exception& ex)
 	{
-		cout << "Ошибка времени выполнения: " << ex.what() << endl;
+		cout << ex.what() << endl;
 	}
 	return 0;
 }
